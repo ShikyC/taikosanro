@@ -44,6 +44,8 @@ public:
     int scoreDiff() const;
     void setScoreDiff(int scoreDiff);
 
+    bool isPlaying() const;
+
 protected:
     void advance(int step);
 

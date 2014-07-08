@@ -185,11 +185,10 @@ void NoteChart::advance(int step)
     if (step)
     {
         int currentElapsed = playProgress_.elapsed();
-        //qDebug() << currentElapsed << "begin";
         // hide disappear measure
         if (currentMeasure_ > 0 && currentElapsed > measures_[currentMeasure_]->disappearElapsed())
         {
-            measures_[currentMeasure_]->setVisible(false);
+            measures_[currentMeasure_]->hide();
         }
 
         // change current measure and show
@@ -197,27 +196,32 @@ void NoteChart::advance(int step)
                 currentElapsed >= measures_[currentMeasure_ + 1]->appearElapsed())
         {
             currentMeasure_++;
-            measures_[currentMeasure_]->setVisible(true);
+            measures_[currentMeasure_]->animate();
         }
 
-        // current measure position
-        if (currentMeasure_ >= 0)
-        {
-            measures_[currentMeasure_]->calcPos(currentElapsed);
-        }
-        // previous measure position
-        if (currentMeasure_ > 0)
-        {
-            measures_[currentMeasure_ - 1]->calcPos(currentElapsed);
-        }
-        // previous previous measure position
-        if (currentMeasure_ > 1)
-        {
-            measures_[currentMeasure_ - 2]->calcPos(currentElapsed);
-        }
+//        // current measure position
+//        if (currentMeasure_ >= 0)
+//        {
+//            measures_[currentMeasure_]->calcPos(currentElapsed);
+//        }
+//        // previous measure position
+//        if (currentMeasure_ > 0)
+//        {
+//            measures_[currentMeasure_ - 1]->calcPos(currentElapsed);
+//        }
+//        // previous previous measure position
+//        if (currentMeasure_ > 1)
+//        {
+//            measures_[currentMeasure_ - 2]->calcPos(currentElapsed);
+//        }
         //qDebug() << currentElapsed << "end" << playProgress_.elapsed() - currentElapsed;
     }
 }
+bool NoteChart::isPlaying() const
+{
+    return isPlaying_;
+}
+
 int NoteChart::scoreDiff() const
 {
     return scoreDiff_;

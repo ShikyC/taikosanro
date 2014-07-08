@@ -5,9 +5,13 @@
 
 #include <QGraphicsItem>
 #include <QQueue>
+#include <QObject>
 
-class Measure : public QGraphicsItem
+class Measure : public QObject, public QGraphicsItem
 {
+    Q_OBJECT
+    Q_PROPERTY(QPointF pos READ pos WRITE setPos)
+    Q_INTERFACES(QGraphicsItem)
 public:
     Measure(QGraphicsItem *parent,
             NoteTypeList &notes,
@@ -18,10 +22,12 @@ public:
             bool isGGT,
             int appearElapsed);
 
+
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget);
 
+    void animate();
     void reset();
     void calcPos(int currentElapsed);
     int appearElapsed();

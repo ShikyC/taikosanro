@@ -51,8 +51,11 @@ void MainWindow::timerEvent(QTimerEvent *event)
     fpsCount_++;
     ui->graphicsView->scene()->advance();
 
-    Ts::DetermineValue result = chart_->hitTest(Ts::NO_ACT);
-    determine_->showResult(result);
+    if (chart_->isPlaying())
+    {
+        Ts::DetermineValue result = chart_->hitTest(Ts::NO_ACT);
+        determine_->showResult(result);
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)

@@ -4,6 +4,7 @@
 #include "stable.h"
 #include <QDebug>
 #include <QPainter>
+#include <QPropertyAnimation>
 
 Measure::Measure(QGraphicsItem *parent,
                  NoteTypeList &notes,
@@ -80,6 +81,16 @@ void Measure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(widget);
 
     painter->drawLine(Ts::NOTE_WIDTH / 2,0,Ts::NOTE_WIDTH / 2, Ts::NOTE_HEIGHT);
+}
+
+void Measure::animate()
+{
+    show();
+    QPropertyAnimation *animation = new QPropertyAnimation(this,"pos",this);
+    animation->setDuration(disappearElapsed_ - appearElapsed_);
+    animation->setStartValue(QPointF(canvasRect_.width(),0));
+    animation->setEndValue(QPointF(-1 * canvasRect_.width(),0));
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 void Measure::reset()
